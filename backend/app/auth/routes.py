@@ -44,6 +44,12 @@ class MeResponse(BaseModel):
     avatar_url: str | None
 
 
+@router.get("/redirect-uri")
+def debug_redirect_uri() -> dict:
+    """Temporary: returns the redirect_uri this app sends to Spotify. Compare with Spotify Dashboard."""
+    return {"redirect_uri": settings.spotify_redirect_uri}
+
+
 @router.get("/login")
 def login() -> dict:
     """Build PKCE authorize URL for Spotify."""
@@ -152,14 +158,15 @@ def callback(
 
     session_id = create_session(user.id)
     response = RedirectResponse(url=settings.frontend_url, status_code=302)
+    is_prod = settings.environment == "production"
     response.set_cookie(
         key="cur8_session",
         value=session_id,
         httponly=True,
-        samesite="lax",
+        samesite="none" if is_prod else "lax",  # none required for cross-origin (Vercel → Railway)
         path="/",
         max_age=7 * 24 * 3600,  # 7 days
-        secure=(settings.environment == "production"),
+        secure=is_prod,
     )
     return response
 
@@ -177,10 +184,11 @@ def logout(request: Request):
     if session_id:
         delete_session(session_id)
     response = JSONResponse(content={"status": "ok"})
+    is_prod = settings.environment == "production"
     response.delete_cookie(
         key="cur8_session",
         path="/",
-        secure=(settings.environment == "production"),
-        samesite="lax",
+        secure=is_prod,
+        samesite="none" if is_prod else "lax",
     )
     return response

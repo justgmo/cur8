@@ -1,4 +1,5 @@
-const API_URL = import.meta.env.VITE_API_URL
+const raw = import.meta.env.VITE_API_URL ?? ''
+const API_URL = raw.startsWith('http://') || raw.startsWith('https://') ? raw : `https://${raw}`
 
 export interface User {
     id: string;

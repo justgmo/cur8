@@ -12,10 +12,11 @@ settings = get_settings()
 
 app = FastAPI(title="Cur8")
 
-# CORS Middleware (allow_origins can be comma-separated in .env)
+# CORS Middleware (allow_origins = comma-separated frontend URLs, e.g. https://cur8-vercel.vercel.app)
+_origins = [o.strip() for o in settings.allowed_origins.split(",") if o.strip()]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[o.strip() for o in settings.allowed_origins.split(",")],
+    allow_origins=_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
