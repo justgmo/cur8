@@ -44,12 +44,6 @@ class MeResponse(BaseModel):
     avatar_url: str | None
 
 
-@router.get("/redirect-uri")
-def debug_redirect_uri() -> dict:
-    """Temporary: returns the redirect_uri this app sends to Spotify. Compare with Spotify Dashboard."""
-    return {"redirect_uri": settings.spotify_redirect_uri}
-
-
 @router.get("/login")
 def login() -> dict:
     """Build PKCE authorize URL for Spotify."""
