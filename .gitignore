@@ -1,0 +1,12 @@
+.env
+
+# system files
+*.DS_Store
+.vscode/
+
+# python files
+*.pyc
+
+
+# backend
+backend/.venv/

@@ -1,0 +1,25 @@
+---
+alwaysApply: true
+---
+
+What cur8 is: SPA for swiping through Spotify liked songs (Tinder-style). Swipe right = keep, left = remove from library. Tech: FastAPI, React (Vite), PostgreSQL, Redis, Spotify Web API with PKCE.
+
+
+
+Repo layout: backend/ (FastAPI app under app/), frontend/ (Vite React), root .env, docker-compose.yml (services: db, redis, backend; container names: cur8-db, cur8-redis, cur8-backend).
+
+
+
+Backend config: backend/app/config.py uses pydantic-settings and get_settings(); env from .env (path ../.env from backend). In Docker, backend gets env only from compose environment (no env_file); use hostnames cur8-db and cur8-redis.
+
+
+
+Done: Health + CORS, SQLAlchemy + backend/app/models.py (User, SpotifyToken), Alembic, Redis client + PKCE store, GET /auth/login, GET /auth/callback (token exchange + DB upsert; no session cookie yet).
+
+
+
+Next: Set HTTP-only session cookie in callback and redirect to SPA; add get_current_user, GET /auth/me, POST /auth/logout; then Spotify client + rate limiting, Track/UserTrackState + swipe APIs, background jobs, frontend auth + swipe UI.
+
+
+
+Run backend: From backend/: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload. Or from root: docker compose up --build (migrations run in backend CMD).

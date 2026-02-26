@@ -1,0 +1,136 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+/* Swipe page */
+.swipe-page {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+.swipe-page__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+.swipe-page__error {
+  color: #c00;
+}
+.swipe-page__actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+.swipe-page__btn {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+}
+.swipe-page__btn--remove {
+  background: #e74c3c;
+  color: #fff;
+}
+.swipe-page__btn--keep {
+  background: #27ae60;
+  color: #fff;
+}
+.swipe-page__btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Track card */
+.track-card {
+  background: #1a1a1a;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: left;
+  cursor: grab;
+  touch-action: none;
+}
+.track-card:active {
+  cursor: grabbing;
+}
+.track-card__artwork {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+.track-card__name {
+  margin: 0 0 0.25rem;
+  font-size: 1.25rem;
+}
+.track-card__artists {
+  margin: 0;
+  color: #b3b3b3;
+  font-size: 0.95rem;
+}
+.track-card__album {
+  margin: 0.25rem 0 0;
+  color: #888;
+  font-size: 0.85rem;
+}
+.track-card__preview-wrap {
+  margin-top: 1rem;
+}
+.track-card__preview-label {
+  display: block;
+  font-size: 0.75rem;
+  color: #888;
+  margin-bottom: 0.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.track-card__preview {
+  width: 100%;
+  height: 32px;
+}
+.track-card__preview-unavailable {
+  font-size: 0.85rem;
+  color: #666;
+}

@@ -1,0 +1,66 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    networks: [app]
+    environment:
+      POSTGRES_USER: cur8
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-moralesgalang}
+      POSTGRES_DB: cur8
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cur8 -d cur8"]
+      interval: 3s
+      timeout: 3s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    networks: [app]
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 3s
+      timeout: 3s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    networks: [app]
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql://cur8:${POSTGRES_PASSWORD:-moralesgalang}@postgres:5432/cur8
+      REDIS_URL: redis://redis:6379
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    networks: [app]
+    ports:
+      - "5173:5173"
+    environment:
+      # Must match SPOTIFY_REDIRECT_URI host so the session cookie is sent (localhost ≠ 127.0.0.1)
+      VITE_API_URL: http://127.0.0.1:8000
+    depends_on:
+      - backend
+
+networks:
+  app:
+    driver: bridge
+
+volumes:
+  postgres_data:

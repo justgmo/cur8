@@ -1,0 +1,1 @@
+{"sessionId": "5b4470", "runId": "startup", "hypothesisId": "H1_H3", "location": "main.py:startup", "message": "Settings loaded", "data": {"database_host": "postgres", "redis_host": "redis"}, "timestamp": 1771955120430.233}

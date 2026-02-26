@@ -1,0 +1,9 @@
+fastapi
+uvicorn[standard]
+sqlalchemy
+alembic
+redis # for caching
+httpx # try it out over requests
+pydantic-settings # for env variables
+python-jose[cryptography] # for sessions
+psycopg2-binary # db driver
